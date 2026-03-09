@@ -590,16 +590,32 @@
         </div>
       </div>
       <!-- Offer Popup -->
-      <div id="offerPopup" class="fixed inset-0 z-[120] hidden flex items-end sm:items-center justify-center">
-        <div class="modal-backdrop absolute inset-0" onclick="closeOfferPopup()"></div>
-        <div class="relative bg-zinc-900 border border-zinc-700 rounded-t-2xl sm:rounded-2xl shadow-2xl w-full sm:max-w-lg flex flex-col animate-fade-in-up" style="max-height: 90dvh;">
+      <div
+        id="offerPopup"
+        class="fixed inset-0 z-[120] hidden flex items-center justify-center"
+      >
+        <div
+          class="modal-backdrop absolute inset-0"
+          onclick="closeOfferPopup()"
+        ></div>
+        <div
+          class="relative bg-zinc-900 border border-zinc-700 rounded-t-2xl sm:rounded-2xl shadow-2xl w-full sm:max-w-lg flex flex-col animate-fade-in-up overflow-hidden"
+          style="max-height: 90dvh"
+        >
           <!-- Fixed header -->
           <div class="flex-shrink-0">
-            <div class="h-1 bg-gradient-to-r from-red-600 via-amber-500 to-red-600 rounded-t-2xl sm:rounded-t-2xl"></div>
-            <div class="flex items-start justify-between gap-4 px-6 pt-5 pb-4 border-b border-zinc-800">
+            <div
+              class="h-1 bg-gradient-to-r from-red-600 via-amber-500 to-red-600 rounded-t-2xl sm:rounded-t-2xl"
+            ></div>
+            <div
+              class="flex items-start justify-between gap-4 px-6 pt-5 pb-4 border-b border-zinc-800"
+            >
               <h2
                 class="text-xl md:text-2xl font-bold leading-tight"
-                style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px;"
+                style="
+                  font-family: &quot;Bebas Neue&quot;, sans-serif;
+                  letter-spacing: 1px;
+                "
               >
                 🌍 Offre exceptionnelle – Nouvel An africain
               </h2>
@@ -607,8 +623,18 @@
                 onclick="closeOfferPopup()"
                 class="flex-shrink-0 w-8 h-8 rounded-full bg-zinc-800 hover:bg-zinc-700 flex items-center justify-center transition mt-0.5"
               >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
             </div>
@@ -617,10 +643,11 @@
           <div class="overflow-y-auto flex-1 px-6 py-5">
             <!-- Main text -->
             <p class="text-gray-300 text-sm leading-relaxed mb-4">
-              À l'occasion du Nouvel An africain du 20 mars 2026, profitez
-              d'une offre spéciale à
+              À l'occasion du Nouvel An africain du 20 mars 2026, profitez d'une
+              offre spéciale à
               <span class="text-white font-bold">360€</span> pour accéder à
-              notre univers d'apprentissage, de transformation et de progression.
+              notre univers d'apprentissage, de transformation et de
+              progression.
             </p>
             <!-- Features -->
             <ul class="space-y-1.5 mb-5 text-sm text-gray-300">
@@ -629,11 +656,21 @@
               <li>🤝 Communauté d'apprentissage</li>
             </ul>
             <!-- Warning box -->
-            <div class="bg-zinc-800 border border-zinc-600 rounded-lg p-4 mb-5 text-sm text-gray-300 space-y-1.5">
+            <div
+              class="bg-zinc-800 border border-zinc-600 rounded-lg p-4 mb-5 text-sm text-gray-300 space-y-1.5"
+            >
               <p class="font-semibold text-white">⚠️ Important</p>
-              <p>Cette offre prend fin le <span class="text-amber-400 font-medium">20 mars 2026 à 23h59</span>.</p>
+              <p>
+                Cette offre prend fin le
+                <span class="text-amber-400 font-medium"
+                  >20 mars 2026 à 23h59</span
+                >.
+              </p>
               <p>Tout le contenu du site sera supprimé début décembre 2026.</p>
-              <p>Après votre inscription, pensez à télécharger l'ensemble de vos contenus avant cette date.</p>
+              <p>
+                Après votre inscription, pensez à télécharger l'ensemble de vos
+                contenus avant cette date.
+              </p>
             </div>
             <!-- Mission text -->
             <p class="text-gray-400 text-xs leading-relaxed mb-6">
@@ -650,7 +687,8 @@
             </a>
             <!-- Secondary text -->
             <p class="text-center text-xs text-gray-500 mt-3 pb-2">
-              💳 Paiement possible en plusieurs fois avec Klarna • Offre valable jusqu'au 20 mars 2026
+              💳 Paiement possible en plusieurs fois avec Klarna • Offre valable
+              jusqu'au 20 mars 2026
             </p>
           </div>
         </div>
