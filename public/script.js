@@ -16,6 +16,7 @@
         isNew: true,
         isPopular: true,
         gradient: "from-indigo-600 to-purple-700",
+        image: null,
         seasons: [
           {
             title: "01 - Orientation",
@@ -145,6 +146,7 @@
         isNew: true,
         isPopular: true,
         gradient: "from-amber-600 to-red-700",
+        image: "assets/_images/au-coeur-des-mysteres.avif",
         seasons: [
           {
             title: "01 - Enseignements des Mystères",
@@ -250,6 +252,7 @@
         isNew: true,
         isPopular: true,
         gradient: "from-cyan-600 to-blue-700",
+        image: null,
         seasons: [
           {
             title: "01 - Questionnements Contemporains",
@@ -514,10 +517,11 @@
       card.onclick = () => openSeriesModal(series.id);
       
       card.innerHTML = `
-        <div class="relative aspect-video rounded-t-lg overflow-hidden bg-gradient-to-br ${series.gradient}">
-          <div class="absolute inset-0 flex items-center justify-center">
-            <span class="text-6xl opacity-30">${series.categoryIcon}</span>
-          </div>
+        <div class="relative aspect-video rounded-t-lg overflow-hidden ${series.image ? '' : 'bg-gradient-to-br ' + series.gradient}">
+          ${series.image
+            ? `<img src="${series.image}" alt="${series.title}" class="w-full h-full object-cover">`
+            : `<div class="absolute inset-0 flex items-center justify-center"><span class="text-6xl opacity-30">${series.categoryIcon}</span></div>`
+          }
           <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
             <div class="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center play-button-pulse">
               <svg class="w-6 h-6 text-black ml-1" fill="currentColor" viewBox="0 0 24 24">
@@ -608,10 +612,11 @@
         
         card.innerHTML = `
           <span class="text-6xl md:text-8xl font-bold text-zinc-800" style="font-family: 'Bebas Neue', sans-serif; -webkit-text-stroke: 2px #333;">${index + 1}</span>
-          <div class="relative w-32 md:w-40 aspect-[2/3] rounded-lg overflow-hidden bg-gradient-to-br ${series.gradient}">
-            <div class="absolute inset-0 flex items-center justify-center">
-              <span class="text-4xl opacity-40">${series.categoryIcon}</span>
-            </div>
+          <div class="relative w-32 md:w-40 aspect-[2/3] rounded-lg overflow-hidden ${series.image ? '' : 'bg-gradient-to-br ' + series.gradient}">
+            ${series.image
+              ? `<img src="${series.image}" alt="${series.title}" class="w-full h-full object-cover">`
+              : `<div class="absolute inset-0 flex items-center justify-center"><span class="text-4xl opacity-40">${series.categoryIcon}</span></div>`
+            }
             <div class="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/80">
               <p class="text-xs font-medium truncate">${series.title}</p>
             </div>
@@ -654,10 +659,11 @@
         </button>
         
         <!-- Header Banner -->
-        <div class="relative h-80 md:h-96 bg-gradient-to-br ${series.gradient}">
-          <div class="absolute inset-0 flex items-center justify-center">
-            <span class="text-[150px] opacity-20">${series.categoryIcon}</span>
-          </div>
+        <div class="relative h-80 md:h-96 ${series.image ? '' : 'bg-gradient-to-br ' + series.gradient}">
+          ${series.image
+            ? `<img src="${series.image}" alt="${series.title}" class="absolute inset-0 w-full h-full object-cover"><div class="absolute inset-0 bg-black/50"></div>`
+            : `<div class="absolute inset-0 flex items-center justify-center"><span class="text-[150px] opacity-20">${series.categoryIcon}</span></div>`
+          }
           <div class="absolute inset-0 bg-gradient-to-t from-[#181818] via-transparent to-transparent"></div>
           <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8">
             <span class="category-pill px-3 py-1 rounded-full text-xs font-medium text-red-400 mb-3 inline-block">
@@ -1126,12 +1132,28 @@
     // INIT
     // ============================================
     
+    // ============================================
+    // OFFER POPUP
+    // ============================================
+
+    function openOfferPopup() {
+      document.getElementById('offerPopup').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeOfferPopup() {
+      document.getElementById('offerPopup').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
     function init() {
       renderContinueLearning();
       renderCategories();
       renderPopular();
       renderNew();
       onConfigChange(config);
+      // Show popup automatically on first visit
+      openOfferPopup();
     }
     
     init();
