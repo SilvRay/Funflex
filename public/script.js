@@ -2371,95 +2371,95 @@ function openSeriesModal(seriesId) {
 
   content.innerHTML = `
         <!-- Close Button -->
-        <button onclick="closeSeriesModal()" class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-zinc-700 transition">
+        <button onclick="closeSeriesModal()" class="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-zinc-700 transition">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
           </svg>
         </button>
-        
+
         <!-- Header Banner -->
-        <div class="relative h-80 md:h-96 ${series.image ? "" : "bg-gradient-to-br " + series.gradient}">
+        <div class="relative h-56 sm:h-72 md:h-96 ${series.image ? "" : "bg-gradient-to-br " + series.gradient}">
           ${
             series.image
               ? `<img src="${series.image}" alt="${series.title}" class="absolute inset-0 w-full h-full object-cover"><div class="absolute inset-0 bg-black/50"></div>`
-              : `<div class="absolute inset-0 flex items-center justify-center"><span class="text-[150px] opacity-20">${series.categoryIcon}</span></div>`
+              : `<div class="absolute inset-0 flex items-center justify-center"><span class="text-[100px] sm:text-[150px] opacity-20">${series.categoryIcon}</span></div>`
           }
           <div class="absolute inset-0 bg-gradient-to-t from-[#181818] via-transparent to-transparent"></div>
-          <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-            <span class="category-pill px-3 py-1 rounded-full text-xs font-medium text-red-400 mb-3 inline-block">
+          <div class="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-8">
+            <span class="category-pill px-3 py-1 rounded-full text-xs font-medium text-red-400 mb-2 inline-block">
               ${series.categoryIcon} ${series.category}
             </span>
-            <h2 class="text-3xl md:text-5xl font-bold mb-4" style="font-family: 'Bebas Neue', sans-serif;">${series.title}</h2>
-            <div class="flex flex-wrap items-center gap-3 mb-4">
-              <span class="text-green-500 font-semibold">${series.match}% Match</span>
-              <span class="text-gray-400">${series.year}</span>
+            <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold mb-2 sm:mb-4 leading-tight" style="font-family: 'Bebas Neue', sans-serif;">${series.title}</h2>
+            <div class="flex flex-wrap items-center gap-2 mb-3">
+              <span class="text-green-500 font-semibold text-sm">${series.match}% Match</span>
+              <span class="text-gray-400 text-sm">${series.year}</span>
               ${!isLibrary ? '<span class="px-2 py-0.5 border border-gray-500 text-xs">HD</span>' : ""}
-              <span class="text-gray-400">${series.seasons.length} ${isLibrary ? "Section" : "Saison"}${series.seasons.length > 1 ? "s" : ""}</span>
-              <span class="text-gray-400">${totalEpisodes} ${isLibrary ? "livres" : "épisodes"}</span>
-              <span class="px-2 py-0.5 bg-zinc-700 rounded text-xs">${series.level}</span>
+              <span class="text-gray-400 text-sm">${series.seasons.length} ${isLibrary ? "Section" : "Saison"}${series.seasons.length > 1 ? "s" : ""}</span>
+              <span class="text-gray-400 text-sm">${totalEpisodes} ${isLibrary ? "livres" : "épisodes"}</span>
+              <span class="px-2 py-0.5 bg-zinc-700 rounded text-xs hidden sm:inline">${series.level}</span>
             </div>
-            <div class="flex items-center gap-3">
-              <button onclick="playEpisode(${series.id}, 0, 0)" class="flex items-center gap-2 px-6 py-3 bg-white text-black font-semibold rounded hover:bg-gray-200 transition">
+            <div class="flex flex-wrap items-center gap-2">
+              <button onclick="playEpisode(${series.id}, 0, 0)" class="flex items-center gap-2 px-4 sm:px-6 py-2.5 bg-white text-black font-semibold rounded hover:bg-gray-200 transition text-sm">
                 ${
                   isLibrary
-                    ? '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>'
-                    : '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>'
+                    ? '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>'
+                    : '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>'
                 }
                 ${isLibrary ? "Lire" : "Lecture"}
               </button>
-              <button onclick="addToList(${series.id})" id="modalListBtn-${series.id}" class="flex items-center gap-2 px-4 py-3 bg-zinc-700/80 rounded hover:bg-zinc-600 transition">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <button onclick="addToList(${series.id})" id="modalListBtn-${series.id}" class="flex items-center gap-2 px-4 py-2.5 bg-zinc-700/80 rounded hover:bg-zinc-600 transition text-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${myList.includes(series.id) ? "M5 13l4 4L19 7" : "M12 4v16m8-8H4"}"/>
                 </svg>
                 ${myList.includes(series.id) ? "Dans ma liste" : "Ma Liste"}
               </button>
-              <button class="p-3 bg-zinc-700/50 rounded-full border border-zinc-600 hover:border-white transition">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <button class="p-2.5 bg-zinc-700/50 rounded-full border border-zinc-600 hover:border-white transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
                 </svg>
               </button>
             </div>
           </div>
         </div>
-        
+
         <!-- Content -->
-        <div class="p-6 md:p-8">
+        <div class="p-4 sm:p-6 md:p-8">
           <!-- Description -->
-          <div class="mb-8">
-            <p class="text-gray-300 text-lg leading-relaxed">${series.description}</p>
+          <div class="mb-5 sm:mb-8">
+            <p class="text-gray-300 text-sm sm:text-base md:text-lg leading-relaxed">${series.description}</p>
           </div>
-          
+
           <!-- Stats -->
-          <div class="grid grid-cols-3 gap-4 mb-8">
-            <div class="bg-zinc-800/50 rounded-lg p-4 text-center">
-              <p class="text-2xl font-bold text-red-500">${series.totalDuration}</p>
+          <div class="grid grid-cols-3 gap-2 sm:gap-4 mb-5 sm:mb-8">
+            <div class="bg-zinc-800/50 rounded-lg p-3 sm:p-4 text-center">
+              <p class="text-lg sm:text-2xl font-bold text-red-500">${series.totalDuration}</p>
               <p class="text-xs text-gray-400">Durée totale</p>
             </div>
-            <div class="bg-zinc-800/50 rounded-lg p-4 text-center">
-              <p class="text-2xl font-bold">${totalEpisodes}</p>
+            <div class="bg-zinc-800/50 rounded-lg p-3 sm:p-4 text-center">
+              <p class="text-lg sm:text-2xl font-bold">${totalEpisodes}</p>
               <p class="text-xs text-gray-400">${isLibrary ? "Livres" : "Épisodes"}</p>
             </div>
-            <div class="bg-zinc-800/50 rounded-lg p-4 text-center">
-              <p class="text-2xl font-bold">${series.seasons.length}</p>
+            <div class="bg-zinc-800/50 rounded-lg p-3 sm:p-4 text-center">
+              <p class="text-lg sm:text-2xl font-bold">${series.seasons.length}</p>
               <p class="text-xs text-gray-400">${isLibrary ? "Sections" : "Saisons"}</p>
             </div>
           </div>
-          
+
           <!-- Season Selector -->
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="text-xl font-semibold">${isLibrary ? "Livres" : "Épisodes"}</h3>
+          <div class="flex items-center justify-between mb-3 sm:mb-4">
+            <h3 class="text-base sm:text-xl font-semibold">${isLibrary ? "Livres" : "Épisodes"}</h3>
             <div class="relative">
-              <select id="seasonSelector-${series.id}" onchange="renderEpisodes(${series.id}, this.value)" class="season-selector appearance-none px-4 py-2 pr-10 rounded-lg text-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-red-600">
+              <select id="seasonSelector-${series.id}" onchange="renderEpisodes(${series.id}, this.value)" class="season-selector appearance-none pl-3 pr-8 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-red-600 max-w-[160px] sm:max-w-none">
                 ${series.seasons.map((s, i) => `<option value="${i}">${s.title}</option>`).join("")}
               </select>
-              <svg class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-3 h-3 sm:w-4 sm:h-4 absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
               </svg>
             </div>
           </div>
-          
+
           <!-- Episodes List -->
-          <div id="episodesList-${series.id}" class="space-y-2">
+          <div id="episodesList-${series.id}" class="space-y-1.5 sm:space-y-2">
             ${renderEpisodesHTML(series, 0)}
           </div>
         </div>
@@ -2477,17 +2477,17 @@ function renderEpisodesHTML(series, seasonIndex) {
     return season.episodes
       .map(
         (ep, i) => `
-        <div class="episode-item flex items-center gap-4 p-4 rounded-lg cursor-pointer" onclick="playEpisode(${series.id}, ${seasonIndex}, ${i})">
-          <span class="text-lg font-bold text-zinc-600 w-6 text-center flex-shrink-0">${i + 1}</span>
-          <div class="relative w-16 h-24 rounded-md overflow-hidden bg-gradient-to-b from-amber-800 to-yellow-900 flex-shrink-0 shadow-md" style="box-shadow: 3px 3px 8px rgba(0,0,0,0.5), inset -3px 0 6px rgba(0,0,0,0.25)">
-            <div class="absolute left-0 top-0 bottom-0 w-2 bg-black/20"></div>
+        <div class="episode-item flex items-center gap-2 sm:gap-4 p-2.5 sm:p-4 rounded-lg cursor-pointer" onclick="playEpisode(${series.id}, ${seasonIndex}, ${i})">
+          <span class="text-base font-bold text-zinc-600 w-5 sm:w-6 text-center flex-shrink-0">${i + 1}</span>
+          <div class="relative w-12 sm:w-16 h-18 sm:h-24 rounded-md overflow-hidden bg-gradient-to-b from-amber-800 to-yellow-900 flex-shrink-0 shadow-md" style="height:4.5rem;box-shadow: 3px 3px 8px rgba(0,0,0,0.5), inset -3px 0 6px rgba(0,0,0,0.25)">
+            <div class="absolute left-0 top-0 bottom-0 w-1.5 sm:w-2 bg-black/20"></div>
             <div class="absolute inset-0 flex items-center justify-center">
-              <span class="text-xl">📖</span>
+              <span class="text-lg sm:text-xl">📖</span>
             </div>
             ${ep.progress > 0 ? `<div class="absolute bottom-0 left-0 right-0 h-1 bg-black/30"><div class="progress-bar h-full" style="width: ${ep.progress}%"></div></div>` : ""}
           </div>
           <div class="flex-1 min-w-0">
-            <h4 class="font-medium text-sm leading-snug mb-1.5">${ep.title}</h4>
+            <h4 class="font-medium text-sm leading-snug mb-1">${ep.title}</h4>
             <p class="text-xs text-amber-500 flex items-center gap-1">
               📄 Ebook PDF${ep.duration ? ` · Lecture ${ep.duration}` : ""}
             </p>
@@ -2502,12 +2502,12 @@ function renderEpisodesHTML(series, seasonIndex) {
   return season.episodes
     .map(
       (ep, i) => `
-        <div class="episode-item flex items-center gap-4 p-4 rounded-lg cursor-pointer" onclick="playEpisode(${series.id}, ${seasonIndex}, ${i})">
-          <span class="text-2xl font-bold text-zinc-600 w-8">${i + 1}</span>
-          <div class="relative w-28 md:w-36 aspect-video rounded-lg overflow-hidden bg-gradient-to-br ${series.gradient} flex-shrink-0">
+        <div class="episode-item flex items-center gap-2 sm:gap-4 p-2.5 sm:p-4 rounded-lg cursor-pointer" onclick="playEpisode(${series.id}, ${seasonIndex}, ${i})">
+          <span class="text-base sm:text-2xl font-bold text-zinc-600 w-5 sm:w-8 text-center flex-shrink-0">${i + 1}</span>
+          <div class="relative w-20 sm:w-28 md:w-36 aspect-video rounded-lg overflow-hidden bg-gradient-to-br ${series.gradient} flex-shrink-0">
             <div class="absolute inset-0 flex items-center justify-center">
-              <div class="w-10 h-10 rounded-full bg-black/60 flex items-center justify-center">
-                <svg class="w-4 h-4 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+              <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/60 flex items-center justify-center">
+                <svg class="w-3 h-3 sm:w-4 sm:h-4 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M8 5v14l11-7z"/>
                 </svg>
               </div>
@@ -2523,9 +2523,9 @@ function renderEpisodesHTML(series, seasonIndex) {
             }
           </div>
           <div class="flex-1 min-w-0">
-            <h4 class="font-medium mb-1">${ep.title}</h4>
-            <p class="text-sm text-gray-400 mb-1">${ep.duration}</p>
-            ${ep.resources ? `<p class="text-xs text-gray-500 flex items-center gap-1">📄 ${ep.resources}</p>` : ""}
+            <h4 class="font-medium text-sm sm:text-base mb-0.5 sm:mb-1 leading-snug">${ep.title}</h4>
+            <p class="text-xs sm:text-sm text-gray-400 mb-0.5 sm:mb-1">${ep.duration}</p>
+            ${ep.resources ? `<p class="text-xs text-gray-500 hidden sm:flex items-center gap-1">📄 ${ep.resources}</p>` : ""}
           </div>
           ${
             ep.progress === 100
