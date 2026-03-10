@@ -157,133 +157,9 @@
           class="relative h-screen min-h-[560px] max-h-[900px] overflow-hidden"
           id="heroSection"
         >
-          <!-- Background Image -->
-          <div
-            class="absolute inset-0 bg-gradient-to-br from-zinc-900 via-black to-zinc-900"
-          >
-            <div
-              class="absolute inset-0"
-              style="
-                background-image:
-                  repeating-linear-gradient(
-                    0deg,
-                    transparent,
-                    transparent 9px,
-                    rgba(255, 255, 255, 0.03) 9px,
-                    rgba(255, 255, 255, 0.03) 10px
-                  ),
-                  repeating-linear-gradient(
-                    90deg,
-                    transparent,
-                    transparent 9px,
-                    rgba(255, 255, 255, 0.03) 9px,
-                    rgba(255, 255, 255, 0.03) 10px
-                  );
-              "
-            ></div>
-            <!-- Code visualization background -->
-            <div
-              class="absolute right-0 top-0 w-2/3 h-full opacity-20 hidden sm:block"
-            >
-              <svg viewBox="0 0 400 400" class="w-full h-full">
-                <defs>
-                  <linearGradient
-                    id="codeGrad"
-                    x1="0%"
-                    y1="0%"
-                    x2="100%"
-                    y2="100%"
-                  >
-                    <stop
-                      offset="0%"
-                      style="stop-color: #e50914; stop-opacity: 0.5"
-                    />
-                    <stop
-                      offset="100%"
-                      style="stop-color: #ff6b6b; stop-opacity: 0.1"
-                    />
-                  </linearGradient>
-                </defs>
-                <text
-                  x="50"
-                  y="80"
-                  fill="url(#codeGrad)"
-                  font-family="monospace"
-                  font-size="14"
-                  opacity="0.6"
-                >
-                  const learn = () =&gt; {
-                </text>
-                <text
-                  x="70"
-                  y="110"
-                  fill="url(#codeGrad)"
-                  font-family="monospace"
-                  font-size="14"
-                  opacity="0.5"
-                >
-                  return knowledge++;
-                </text>
-                <text
-                  x="50"
-                  y="140"
-                  fill="url(#codeGrad)"
-                  font-family="monospace"
-                  font-size="14"
-                  opacity="0.6"
-                >
-                  };
-                </text>
-                <text
-                  x="50"
-                  y="200"
-                  fill="url(#codeGrad)"
-                  font-family="monospace"
-                  font-size="14"
-                  opacity="0.4"
-                >
-                  function success() {
-                </text>
-                <text
-                  x="70"
-                  y="230"
-                  fill="url(#codeGrad)"
-                  font-family="monospace"
-                  font-size="14"
-                  opacity="0.3"
-                >
-                  skills.push(new Skill());
-                </text>
-                <text
-                  x="50"
-                  y="260"
-                  fill="url(#codeGrad)"
-                  font-family="monospace"
-                  font-size="14"
-                  opacity="0.4"
-                >
-                  }
-                </text>
-                <circle
-                  cx="300"
-                  cy="150"
-                  r="80"
-                  fill="none"
-                  stroke="url(#codeGrad)"
-                  stroke-width="1"
-                  opacity="0.3"
-                />
-                <circle
-                  cx="320"
-                  cy="280"
-                  r="50"
-                  fill="none"
-                  stroke="url(#codeGrad)"
-                  stroke-width="1"
-                  opacity="0.2"
-                />
-              </svg>
-            </div>
+          <!-- Background Grid -->
+          <div class="absolute inset-0 bg-black">
+            <div id="heroBgGrid" class="absolute inset-0 overflow-hidden"></div>
           </div>
           <!-- Gradient Overlay -->
           <div class="hero-gradient absolute inset-0"></div>
@@ -297,7 +173,7 @@
                 <span
                   class="category-pill px-3 py-1 rounded-full text-xs font-medium text-red-400"
                 >
-                  💻 Développement Web
+                  🎓 Formations
                 </span>
               </div>
               <!-- Title -->
