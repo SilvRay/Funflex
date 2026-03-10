@@ -1,4 +1,10 @@
 // ============================================
+// STRIPE CONFIG
+// ============================================
+
+const STRIPE_PUBLISHABLE_KEY = "pk_live_XXXXXXXXXXXXXXXX"; // Remplacer par ta clé publique Stripe
+
+// ============================================
 // DATA
 // ============================================
 
@@ -2568,6 +2574,9 @@ function playEpisode(seriesId, seasonIndex, episodeIndex) {
   const season = series.seasons[seasonIndex];
   const episode = season.episodes[episodeIndex];
 
+  openPaymentPage({ series, episode });
+  return;
+
   const playerModal = document.getElementById("playerModal");
   const playerContent = document.getElementById("playerContent");
 
@@ -2997,6 +3006,260 @@ function openOfferPopup() {
 function closeOfferPopup() {
   document.getElementById("offerPopup").classList.add("hidden");
   document.body.style.overflow = "";
+}
+
+// ============================================
+// PAYMENT PAGE
+// ============================================
+
+function openPaymentPage(context) {
+  const modal = document.getElementById("paymentModal");
+  const content = document.getElementById("paymentContent");
+
+  const series = context.series || null;
+  const episode = context.episode || null;
+
+  const heroSection = series
+    ? `
+      ${series.image ? `<img src="${series.image}" class="absolute inset-0 w-full h-full object-cover opacity-15 blur-sm scale-110 pointer-events-none">` : `<div class="absolute inset-0 bg-gradient-to-br ${series.gradient} opacity-20"></div>`}
+      <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/70 to-black"></div>
+      <div class="relative px-4 sm:px-8 pt-12 pb-8 text-center max-w-2xl mx-auto">
+        <div class="w-16 h-16 mx-auto mb-5 rounded-full bg-red-600/20 border border-red-600/40 flex items-center justify-center">
+          <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+          </svg>
+        </div>
+        <span class="px-3 py-1 bg-red-600/20 border border-red-600/40 rounded-full text-red-400 text-xs font-medium uppercase tracking-wider">Contenu Premium</span>
+        <h1 class="text-2xl sm:text-4xl font-bold mt-4 mb-1 leading-tight" style="font-family:'Bebas Neue',sans-serif">${series.title}</h1>
+        ${episode ? `<p class="text-gray-400 text-sm mt-1">${episode.title}</p>` : ""}
+        <p class="text-gray-400 text-sm mt-3 leading-relaxed max-w-md mx-auto">Rejoins l'univers Funflex pour accéder à l'intégralité du contenu — formations, ebooks et lives.</p>
+      </div>`
+    : `
+      <div class="absolute inset-0 bg-gradient-to-b from-zinc-900 to-black"></div>
+      <div class="relative px-4 sm:px-8 pt-12 pb-8 text-center max-w-2xl mx-auto">
+        <div class="w-16 h-16 mx-auto mb-5 rounded-full bg-red-600/20 border border-red-600/40 flex items-center justify-center">
+          <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+          </svg>
+        </div>
+        <span class="px-3 py-1 bg-red-600/20 border border-red-600/40 rounded-full text-red-400 text-xs font-medium uppercase tracking-wider">Accès Complet</span>
+        <h1 class="text-2xl sm:text-4xl font-bold mt-4 mb-3 leading-tight" style="font-family:'Bebas Neue',sans-serif">Rejoins l'Univers Funflex</h1>
+        <p class="text-gray-400 text-sm leading-relaxed max-w-md mx-auto">Accède à l'intégralité du contenu — formations, ebooks et lives.</p>
+      </div>`;
+
+  content.innerHTML = `
+    <div class="min-h-full bg-black text-white flex flex-col">
+
+      <!-- Top bar -->
+      <div class="flex items-center justify-between px-4 sm:px-8 py-4 border-b border-zinc-800 bg-zinc-950/90 backdrop-blur sticky top-0 z-10">
+        <button onclick="closePaymentPage()" class="flex items-center gap-2 text-gray-400 hover:text-white transition text-sm">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+          </svg>
+          Retour
+        </button>
+        <span class="text-xl font-bold tracking-wider text-red-500" style="font-family:'Bebas Neue',sans-serif">FUNSCHOOLING</span>
+        <div class="w-16"></div>
+      </div>
+
+      <!-- Hero -->
+      <div class="relative overflow-hidden">${heroSection}</div>
+
+      <!-- Offer card -->
+      <div class="flex-1 px-4 sm:px-8 pb-12 max-w-2xl mx-auto w-full">
+
+        <div class="bg-zinc-900 border border-zinc-700 rounded-2xl overflow-hidden mb-5">
+          <div class="h-1 bg-gradient-to-r from-red-600 via-amber-500 to-red-600"></div>
+          <div class="p-6 sm:p-8">
+
+            <!-- Price -->
+            <div class="flex items-end gap-3 mb-1">
+              <span class="text-5xl sm:text-6xl font-black">360€</span>
+              <span class="text-gray-500 line-through text-xl mb-2">499€</span>
+            </div>
+            <p class="text-amber-400 text-sm font-medium mb-6">🌍 Offre Nouvel An africain — jusqu'au 20 mars 2026</p>
+
+            <!-- Features -->
+            <ul class="space-y-3 mb-8">
+              ${[
+                "+400 heures de vidéos de formation",
+                "44 ebooks PDF téléchargeables",
+                "95 replays de lives",
+                "Accès à vie à tout le contenu",
+                "Communauté d'apprentissage Kaxoka",
+              ]
+                .map(
+                  (f) => `
+              <li class="flex items-center gap-3 text-gray-300 text-sm">
+                <span class="w-5 h-5 rounded-full bg-green-600/20 border border-green-600/40 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-3 h-3 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                </span>
+                ${f}
+              </li>`,
+                )
+                .join("")}
+            </ul>
+
+            <!-- Formulaire Stripe -->
+            <div class="border-t border-zinc-700 pt-6 mt-2">
+              <p class="text-sm font-medium text-gray-300 mb-4">Informations de paiement</p>
+              <div class="space-y-4 mb-4">
+                <div>
+                  <label class="block text-xs text-gray-400 mb-1.5">Nom complet</label>
+                  <input type="text" id="payment-name" placeholder="Prénom Nom"
+                    class="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition">
+                </div>
+                <div>
+                  <label class="block text-xs text-gray-400 mb-1.5">Email</label>
+                  <input type="email" id="payment-email" placeholder="nom@exemple.com"
+                    class="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition">
+                </div>
+                <div>
+                  <label class="block text-xs text-gray-400 mb-1.5">Carte bancaire</label>
+                  <div id="stripe-payment-element" class="bg-zinc-800 border border-zinc-700 rounded-lg p-3">
+                    <div class="flex items-center justify-center py-4">
+                      <div class="w-5 h-5 border-2 border-red-500 border-t-transparent rounded-full animate-spin"></div>
+                      <span class="ml-3 text-sm text-gray-500">Chargement...</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="stripe-error" class="hidden mb-4 p-3 bg-red-900/30 border border-red-800 rounded-lg text-red-400 text-sm"></div>
+              <button id="stripe-submit" onclick="submitStripePayment()"
+                class="flex items-center justify-center gap-2 w-full py-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl transition text-base">
+                <svg id="stripe-spinner" class="hidden w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                </svg>
+                <span id="stripe-submit-text">💳 Payer 360€</span>
+              </button>
+              <p class="text-center text-xs text-gray-500 mt-4">Paiement possible en plusieurs fois avec Klarna • Sécurisé par Stripe 🔒</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Warning -->
+        <div class="bg-zinc-900/50 border border-zinc-800 rounded-xl p-4 text-xs text-gray-500 space-y-1.5">
+          <p class="text-gray-400 font-medium">⚠️ Important</p>
+          <p>Cette offre prend fin le <span class="text-amber-400">20 mars 2026 à 23h59</span>.</p>
+          <p>Tout le contenu sera supprimé début décembre 2026. Pensez à télécharger vos contenus avant cette date.</p>
+        </div>
+
+      </div>
+    </div>
+  `;
+
+  modal.classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+}
+
+function closePaymentPage() {
+  document.getElementById("paymentModal").classList.add("hidden");
+  document.body.style.overflow = "";
+  stripeElements = null;
+}
+
+// ─── Stripe Elements ────────────────────────────────────────────────────────
+
+let stripeElements = null;
+
+async function initStripePayment() {
+  if (!window.Stripe) {
+    console.error("Stripe.js non chargé");
+    return;
+  }
+
+  const stripe = window.Stripe(STRIPE_PUBLISHABLE_KEY);
+
+  // Récupère le clientSecret depuis le backend
+  let clientSecret;
+  try {
+    const name = document.getElementById("payment-name")?.value || "";
+    const email = document.getElementById("payment-email")?.value || "";
+    const res = await fetch("/api/create-payment-intent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email }),
+    });
+    const data = await res.json();
+    clientSecret = data.clientSecret;
+    if (!clientSecret) throw new Error(data.error || "clientSecret manquant");
+  } catch (err) {
+    document.getElementById("stripe-payment-element").innerHTML =
+      `<p class="text-red-400 text-sm py-3 text-center">Impossible de charger le formulaire : ${err.message}</p>`;
+    return;
+  }
+
+  // Apparence dark Funflex
+  const appearance = {
+    theme: "night",
+    variables: {
+      colorPrimary: "#e50914",
+      colorBackground: "#27272a",
+      colorText: "#ffffff",
+      colorTextSecondary: "#9ca3af",
+      colorDanger: "#ef4444",
+      fontFamily: "Inter, system-ui, sans-serif",
+      borderRadius: "8px",
+    },
+    rules: {
+      ".Input": { border: "1px solid #3f3f46", backgroundColor: "#18181b" },
+      ".Input:focus": { border: "1px solid #e50914", boxShadow: "none" },
+    },
+  };
+
+  stripeElements = stripe.elements({ clientSecret, appearance });
+  const paymentElement = stripeElements.create("payment", { layout: "tabs" });
+  document.getElementById("stripe-payment-element").innerHTML = "";
+  paymentElement.mount("#stripe-payment-element");
+
+  // On re-crée le PaymentIntent si nom/email changent (pour les metadata)
+  document.getElementById("stripe-submit").dataset.stripe = JSON.stringify({ stripe: true });
+  document.getElementById("stripe-submit").dataset.clientSecret = clientSecret;
+  window._stripeInstance = stripe;
+}
+
+async function submitStripePayment() {
+  const stripe = window._stripeInstance;
+  if (!stripe || !stripeElements) return;
+
+  const submitBtn = document.getElementById("stripe-submit");
+  const spinner = document.getElementById("stripe-spinner");
+  const submitText = document.getElementById("stripe-submit-text");
+  const errorDiv = document.getElementById("stripe-error");
+
+  // Validation basique
+  const name = document.getElementById("payment-name").value.trim();
+  const email = document.getElementById("payment-email").value.trim();
+  if (!name || !email) {
+    errorDiv.textContent = "Merci de renseigner ton nom et ton email.";
+    errorDiv.classList.remove("hidden");
+    return;
+  }
+
+  submitBtn.disabled = true;
+  spinner.classList.remove("hidden");
+  submitText.textContent = "Traitement en cours...";
+  errorDiv.classList.add("hidden");
+
+  const { error } = await stripe.confirmPayment({
+    elements: stripeElements,
+    confirmParams: {
+      return_url: window.location.origin + "/success.html",
+      payment_method_data: {
+        billing_details: { name, email },
+      },
+    },
+  });
+
+  if (error) {
+    errorDiv.textContent = error.message;
+    errorDiv.classList.remove("hidden");
+    submitBtn.disabled = false;
+    spinner.classList.add("hidden");
+    submitText.textContent = "💳 Payer 360€";
+  }
+  // En cas de succès, Stripe redirige vers /success.html automatiquement
 }
 
 function initHeroBgGrid() {

@@ -13,6 +13,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
+    <script src="https://js.stripe.com/v3/"></script>
     <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
   </head>
   <body
@@ -557,6 +558,7 @@
             <!-- CTA Button -->
             <a
               href="#"
+              onclick="event.preventDefault(); closeOfferPopup(); openPaymentPage({ type: 'popup' });"
               class="flex items-center justify-center gap-2 w-full py-3.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl transition transform hover:scale-[1.02] text-sm md:text-base"
             >
               ➡️ Je profite de l'offre à 360€
@@ -568,6 +570,10 @@
             </p>
           </div>
         </div>
+      </div>
+      <!-- Payment Modal -->
+      <div id="paymentModal" class="fixed inset-0 z-[130] hidden bg-black">
+        <div id="paymentContent" class="h-full overflow-auto"></div>
       </div>
       <!-- Video Player Modal -->
       <div id="playerModal" class="fixed inset-0 z-[110] hidden bg-black">
